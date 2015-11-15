@@ -5,4 +5,4 @@ source "${OPENSHIFT_RUBY_DIR}/lib/servers"
 
 no-jruby
 
-ruby_context "gem install unicorn --no-rdoc --no-ri"
+gem install unicorn
