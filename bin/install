@@ -12,11 +12,13 @@ esac
 shopt -s dotglob
 for dir in template; do
     mkdir -p $OPENSHIFT_RUBY_DIR/$dir
-    cp -Lr $OPENSHIFT_RUBY_DIR/versions/$version/$dir/* $OPENSHIFT_RUBY_DIR/$dir 
+    cp -Lr $OPENSHIFT_RUBY_DIR/versions/$version/$dir/* $OPENSHIFT_RUBY_DIR/$dir
 done
 
 mkdir -p $OPENSHIFT_RUBY_DIR/tmp
 mkdir -p $OPENSHIFT_HOMEDIR/.passenger
+
+echo "source /etc/profile.d/rvm.sh" > $OPENSHIFT_HOMEDIR/.bashrc
 
 echo "$version" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_VERSION
 update-configuration $version
@@ -24,5 +26,3 @@ update-configuration $version
 # Create additional directories required by RUBY and httpd
 ln -s /usr/lib64/httpd/modules $OPENSHIFT_RUBY_DIR
 ln -s /etc/httpd/conf/magic $OPENSHIFT_RUBY_DIR/etc/magic
-
-
