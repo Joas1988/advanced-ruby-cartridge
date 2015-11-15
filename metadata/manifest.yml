@@ -4,9 +4,6 @@ Cartridge-Short-Name: RUBY
 Display-Name: Advanced Ruby cartridge
 Description: Advanced Ruby cartridge with additional support for many popular webservers and JRuby implementation.
 Version: '1.9'
-Versions:
-- '1.9'
-- '1.8'
 License: Ruby BSDL
 License-Url: http://www.ruby-lang.org/en/about/license.txt
 Vendor: ruby.org
