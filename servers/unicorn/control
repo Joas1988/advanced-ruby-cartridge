@@ -1,19 +1,39 @@
 #!/bin/bash -e
 
 source "${OPENSHIFT_RUBY_DIR}/lib/servers"
+source "/etc/profile.d/rvm.sh"
 
 no-jruby
 
 function start() {
-  run_command "unicorn -c ${OPENSHIFT_RUBY_DIR}/servers/unicorn/config.rb -D -E production"
+  #[ -f ${OPENSHIFT_RUBY_DIR}run/server.pid ] && rm ${OPENSHIFT_RUBY_DIR}run/server.pid
+  if [ ! -f ${OPENSHIFT_RUBY_DIR}/run/server.pid ]
+  then
+    export RUBY_GC_HEAP_INIT_SLOTS=1800000;
+    export RUBY_GC_MIN_SLOTS=1800000;
+    export RUBY_HEAP_FREE_MIN=18000:
+    export RUBY_GC_MALLOC_LIMIT=120000000;
+    export RUBY_HEAP_SLOTS_INCREMENT=144000;
+    export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1;
+    bundle exec unicorn -c ${OPENSHIFT_RUBY_DIR}servers/unicorn/config.rb -D -E production
+  fi
 }
 
 function stop() {
-  kill -QUIT `cat ${OPENSHIFT_RUBY_DIR}run/server.pid`
+  if [ -f ${OPENSHIFT_RUBY_DIR}run/server.pid ]
+  then
+        kill -QUIT `cat ${OPENSHIFT_RUBY_DIR}run/server.pid` || echo "Can't kill process"
+        sleep 2
+        if [ -f ${OPENSHIFT_RUBY_DIR}run/server.pid ]
+        then
+               rm ${OPENSHIFT_RUBY_DIR}run/server.pid
+        fi
+  fi
 }
 
 function restart() {
   stop
+  sleep 3
   start
 }
 
