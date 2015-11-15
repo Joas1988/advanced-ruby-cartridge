@@ -2,6 +2,7 @@
 # Utility functions for use in the cartridge scripts.
 
 source "${OPENSHIFT_RUBY_DIR}/lib/servers"
+source "/etc/profile.d/rvm.sh"
 
 function wait_for_stop {
         pid=$1
@@ -19,37 +20,38 @@ function wait_for_stop {
 }
 
 function update-configuration {
-    if [ "$OPENSHIFT_RUBY_PLATFORM" = "jruby" ]
-      then
-        echo -n "${OPENSHIFT_RUBY_DIR}/.jruby:" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
-        echo -n "${OPENSHIFT_DEPENDENCIES_DIR}/.gem-jruby/bin" >> $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
-      else
-        echo -n "default" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_RUNNING_PLATFORM
-        case "$1" in
-              1.9)
-                echo -n "${OPENSHIFT_HOMEDIR}/.gem/bin:" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
-                dirname $(scl enable ruby193 "which ruby") >> $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
+    #if [ "$OPENSHIFT_RUBY_PLATFORM" = "jruby" ]
+    #  then
+    #    echo -n "${OPENSHIFT_RUBY_DIR}/.jruby:" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
+    #    echo -n "${OPENSHIFT_DEPENDENCIES_DIR}/.gem-jruby/bin" >> $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
+    #  else
+    #    echo -n "default" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_RUNNING_PLATFORM
+    #    case "$1" in
+    #          1.9)
+    #            #echo -n "${OPENSHIFT_HOMEDIR}/.gem/bin:" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
+    #            #dirname $(scl enable ruby193 "which ruby") >> $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
+    #            dirname $(which ruby) >> $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
+    #
+    #            #local ld_path=$(LD_LIBRARY_PATH="" scl enable ruby193 "printenv LD_LIBRARY_PATH")
+    #            #path_append $LD_LIBRARY_PATH $ld_path > $OPENSHIFT_RUBY_DIR/env/LD_LIBRARY_PATH
 
-                local ld_path=$(LD_LIBRARY_PATH="" scl enable ruby193 "printenv LD_LIBRARY_PATH")
-                path_append $LD_LIBRARY_PATH $ld_path > $OPENSHIFT_RUBY_DIR/env/LD_LIBRARY_PATH
+    #            #local man_path=$(MANPATH="" scl enable ruby193 "printenv MANPATH")
+    #            #path_append $MANPATH $man_path > $OPENSHIFT_RUBY_DIR/env/MANPATH
+    #            ;;
 
-                local man_path=$(MANPATH="" scl enable ruby193 "printenv MANPATH")
-                path_append $MANPATH $man_path > $OPENSHIFT_RUBY_DIR/env/MANPATH
-                ;;
-
-              1.8)
-                rm -f \
-                    $OPENSHIFT_RUBY_DIR/env/LD_LIBRARY_PATH \
-                    $OPENSHIFT_RUBY_DIR/env/MANPATH
-                echo -n "${OPENSHIFT_HOMEDIR}/.gem/bin" >> $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
-                ;;
-            esac
-    fi
+    #          1.8)
+    #            rm -f \
+    #                $OPENSHIFT_RUBY_DIR/env/LD_LIBRARY_PATH \
+    #                $OPENSHIFT_RUBY_DIR/env/MANPATH
+    #            echo -n "${OPENSHIFT_HOMEDIR}/.gem/bin" >> $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT
+    #            ;;
+    #        esac
+    #fi
 
     set_active_platform "$OPENSHIFT_RUBY_PLATFORM"
 
-    local new_path=`cat $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT`
-    export PATH="$new_path:$PATH"
+    #local new_path=`cat $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_PATH_ELEMENT`
+    #export PATH="$new_path:$PATH"
 }
 
 function parse_args {
