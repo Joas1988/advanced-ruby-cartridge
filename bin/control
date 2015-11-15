@@ -39,7 +39,7 @@ function start() {
     then
       echo "Cartridge is running on JRuby."
     fi
-
+  
     if ! is_server_installed $OPENSHIFT_RUBY_SERVER && ! is_bundler_used
     then
       echo "Installing ${OPENSHIFT_RUBY_SERVER} ..."
@@ -49,7 +49,7 @@ function start() {
 
     pushd $OPENSHIFT_REPO_DIR 1>/dev/null
     server-control $OPENSHIFT_RUBY_SERVER start
-    popd 1>/dev/null
+    popd 1>/dev/null    
 
     echo -n "${OPENSHIFT_RUBY_SERVER}" > $OPENSHIFT_RUBY_DIR/env/OPENSHIFT_RUBY_RUNNING_SERVER
 }
@@ -78,7 +78,7 @@ function restart() {
       pushd $OPENSHIFT_REPO_DIR 1>/dev/null
       server-control $OPENSHIFT_RUBY_SERVER restart
       popd 1>/dev/null
-    fi
+    fi 
 }
 
 function server() {

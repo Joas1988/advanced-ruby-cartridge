@@ -1,0 +1,15 @@
+--- 
+address: 127.10.171.1
+port: 8080
+pid: /var/lib/openshift/561e848cd8fe34607b00002f/advanced-ruby//run/server.pid
+timeout: 30
+wait: 30
+log: /var/lib/openshift/561e848cd8fe34607b00002f/advanced-ruby//logs//thin_stdout.log
+max_conns: 1024
+require: []
+environment: production
+max_persistent_conns: 512
+servers: 1
+threaded: true
+no-epoll: true
+daemonize: true

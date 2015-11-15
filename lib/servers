@@ -19,41 +19,41 @@ function set_active_server() {
 
 
 function is_server_installed() {
-        case $1 in
-                "passenger"|"custom")
-                        ;;
-                "puma"|"thin"|"unicorn"|"rainbows")
-                        gem_exists "$1"
-                        ;;
-                *)
-                        echo "WARN: Unknown \"$1\" server" >&2
-                        exit 1
-                        ;;
-        esac
+	case $1 in
+		"passenger"|"custom")
+			;;
+		"puma"|"thin"|"unicorn"|"rainbows")
+			gem_exists "$1"
+			;;
+		*)
+			echo "WARN: Unknown \"$1\" server" >&2
+			exit 1
+			;;
+	esac
 }
 
 function gem_exists() {
-        [ "`ruby_context "gem list -i $1"`" == "true" ]
+	[ "`ruby_context "gem list -i $1"`" == "true" ]
 }
 
 # if bundler is used, it's needed to run gems in bundle context
 function run_command() {
-        if is_bundler_used
-        then
-            if [ "$OPENSHIFT_RUBY_RUNNING_PLATFORM" = "jruby" ]
+	if is_bundler_used
+	then
+	    if [ "$OPENSHIFT_RUBY_RUNNING_PLATFORM" = "jruby" ]
         then
           ruby_context "bundle exec $1" # needed because of newest version of bundler
         else
-                  ruby_context "bundle exec '$1'"
-                fi
-        else
-                ruby_context "$1"
-        fi
+		  ruby_context "bundle exec '$1'"
+		fi
+	else
+		ruby_context "$1"
+	fi
 
 }
 
 function is_bundler_used() {
-        [ -f ${OPENSHIFT_REPO_DIR}/Gemfile ]
+	[ -f ${OPENSHIFT_REPO_DIR}/Gemfile ]	
 }
 
 
@@ -90,3 +90,4 @@ function only-jruby() {
     exit 1
   fi
 }
+

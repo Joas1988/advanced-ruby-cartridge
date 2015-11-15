@@ -8,7 +8,7 @@ no-jruby
 function start() {
   #[ -f ${OPENSHIFT_RUBY_DIR}run/server.pid ] && rm ${OPENSHIFT_RUBY_DIR}run/server.pid
   if [ ! -f ${OPENSHIFT_RUBY_DIR}/run/server.pid ]
-  then
+  then  
     export RUBY_GC_HEAP_INIT_SLOTS=1800000;
     export RUBY_GC_MIN_SLOTS=1800000;
     export RUBY_HEAP_FREE_MIN=18000:
@@ -21,12 +21,12 @@ function start() {
 
 function stop() {
   if [ -f ${OPENSHIFT_RUBY_DIR}run/server.pid ]
-  then
+  then  
         kill -QUIT `cat ${OPENSHIFT_RUBY_DIR}run/server.pid` || echo "Can't kill process"
         sleep 2
-        if [ -f ${OPENSHIFT_RUBY_DIR}run/server.pid ]
+        if [ -f ${OPENSHIFT_RUBY_DIR}run/server.pid ] 
         then
-               rm ${OPENSHIFT_RUBY_DIR}run/server.pid
+               rm ${OPENSHIFT_RUBY_DIR}run/server.pid 
         fi
   fi
 }
