@@ -5,7 +5,7 @@ source "${OPENSHIFT_RUBY_DIR}/lib/util"
 source "${OPENSHIFT_RUBY_DIR}/lib/ruby_context"
 source "${OPENSHIFT_RUBY_DIR}/lib/servers"
 
-source "/etc/profile.d/rvm.sh"
+#source "/etc/profile.d/rvm.sh"
 
 if [ -z "$OPENSHIFT_RUBY_SERVER" ]
 then
