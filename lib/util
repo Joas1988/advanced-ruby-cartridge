@@ -2,7 +2,7 @@
 # Utility functions for use in the cartridge scripts.
 
 source "${OPENSHIFT_RUBY_DIR}/lib/servers"
-source "/etc/profile.d/rvm.sh"
+source "/usr/local/rvm/scripts/rvm"
 
 function wait_for_stop {
         pid=$1
